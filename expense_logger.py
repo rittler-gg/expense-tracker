@@ -198,7 +198,7 @@ def call_gemini_extract(
         f"Email Body:\n{body_text}"
     )
 
-    for model in ("gemini-2.5-flash", "gemini-1.5-flash"):
+    for model in ("gemini-2.5-flash", "gemini-2.0-flash"):
         for attempt in range(3):
             try:
                 response = client.models.generate_content(

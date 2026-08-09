@@ -57,4 +57,4 @@ Schedule it with cron or launchd to run unattended.
 
 ## Note
 
-`.env`, `credentials.json` and `token.json` are gitignored and should never be committed. Bank sender addresses are configured via `BANK_ALERT_SENDERS` rather than hardcoded.
+`.env`, `credentials.json` and `token.json` are gitignored and should never be committed. Bank sender addresses default to HDFC and Axis alert addresses; set `BANK_ALERT_SENDERS` to a comma-separated list to use it with any other bank.

@@ -133,17 +133,20 @@ def _normalize_date(
 def build_gmail_query() -> str:
     """Build Gmail search query for transaction alert emails."""
     # Keep sender filters strict to avoid pulling marketing campaigns.
-    # Configured via BANK_ALERT_SENDERS (comma-separated) so this works for any bank.
+    # Defaults cover HDFC and Axis; set BANK_ALERT_SENDERS (comma-separated)
+    # to override for any other bank.
+    default_senders = [
+        "alerts@hdfcbank.net",
+        "alerts@hdfcbank.bank.in",
+        "alerts@hdfcbank.com",
+        "alerts@axis.bank.in",
+        "alerts@axisbank.com",
+    ]
     senders = [
         s.strip()
         for s in os.getenv("BANK_ALERT_SENDERS", "").split(",")
         if s.strip()
-    ]
-    if not senders:
-        raise RuntimeError(
-            "BANK_ALERT_SENDERS is empty. Set it in .env to a comma-separated list "
-            "of your bank's alert addresses, e.g. alerts@yourbank.com"
-        )
+    ] or default_senders
     sender_query = " OR ".join(f"from:{s}" for s in senders)
 
     # Different banks use different wording in transaction alerts.
